@@ -11,3 +11,5 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /login                      controllers.Application.login()
 
 POST    /login                      controllers.Application.authenticate()
+
+GET     /logout                     controllers.Application.logout()

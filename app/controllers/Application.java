@@ -7,14 +7,17 @@ import play.*;
 import play.data.*;
 import play.mvc.*;
 
+
 import views.html.*;
 
 public class Application extends Controller {
 
+    @Security.Authenticated(Secured.class)
     public static Result index() {
         return ok(index.render(
-                Project.find.all(),
-                Task.find.all()
+                Project.findInvolving(request().username()),
+                Task.findTodoInvolving(request().username()),
+                User.find.byId(request().username())
         ));
     }
 
@@ -47,6 +50,13 @@ public class Application extends Controller {
             }
             return null;
         }
+    }
+
+    public static Result logout(){
+        session().clear();
+        flash("success", "You've been logged out");
+        return redirect(controllers.routes.Application.login()
+        );
     }
 
 }
