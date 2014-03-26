@@ -55,7 +55,18 @@ public class Application extends Controller {
     public static Result logout(){
         session().clear();
         flash("success", "You've been logged out");
-        return redirect(controllers.routes.Application.login()
+        return redirect(controllers.routes.Application.login());
+    }
+
+    public static Result javascriptRoutes() {
+        response().setContentType("text/javascript");
+        return ok(
+                Routes.javascriptRouter("jsRoutes",
+                        controllers.routes.javascript.Projects.add(),
+                        controllers.routes.javascript.Projects.delete(),
+                        controllers.routes.javascript.Projects.rename(),
+                        controllers.routes.javascript.Projects.addGroup()
+                )
         );
     }
 
